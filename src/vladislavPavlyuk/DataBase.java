@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class DataBase {
     public static Scanner s = new Scanner(System.in);
 
-	public static int aNum; //hello world!								// Answer number user choose
+	public static int aNum; //Welcome to hell						// Answer number user choose
 	public static int qNum; 								// Question number user choose
 
 
