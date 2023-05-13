@@ -1,6 +1,6 @@
 package vladislavPavlyuk;
 
-public class Question {
+public class Question extends BaseQ {
 
     //Class attributes
     private String question;                // - Question string
@@ -9,29 +9,27 @@ public class Question {
     private int ansCount;                   // - Answer counter
     private int correctAnsCount=0;          // - Correct answer counter (for Exam printing)
     private final int MAX_ANS = 10;         // - Max answers counter (can be replaced by number 10)
-    private int questionID;                 // - Question ID
-    private static int questionCounter;     // - Question counter
     private String correctAnswer;           // - Correct answer for open question
 
 
 
-    public Question(String question) {                       // - Multiple choise question constractor 
+    public Question(String question,DifficultyLevel difficultyLevel) {                       // - Multiple choise question constractor 
+        super(difficultyLevel); 
         setQuestion(question);                                  // - Set question
         this.boolAnsType = new Boolean[MAX_ANS];                // - Creates array of booleans (size of Max answers)
         this.fitAns = new int[MAX_ANS];                         // - Creates array of answers (size of Max answers)
         this.ansCount = 0;                                      // - Counter of answers reset
-        setID();                                                // - Sets question unic ID
     }
 
-    public Question(String question, String correctAnswer){  // - Open question constractor
-        setQuestion(question);                                  // - Set question
-        setID();                                                // - Sets question unic ID 
-        setAnswer(correctAnswer);                               // - Sets Answer to open question
+    public Question(String question, String correctAnswer, DifficultyLevel difficultyLevel){  // - Open question constractor
+        super(difficultyLevel); 
+        setQuestion(question);                                  // - Set question                                             // - Sets question unic ID 
+        setAnswer(correctAnswer);                               // - Sets Answer to open question 
+        correctAnsCount=101;
+        this.ansCount = 0;  
+        
     }
-    public void setID(){
-        this.questionID = questionCounter;                      // - sets question ID number
-        questionCounter++;                                      // - adds +1 to question counter
-    }
+   
     public void setQuestion(String question) {                  // - Set question function
         this.question = question;
     }
@@ -87,11 +85,7 @@ public class Question {
     }
 
     public Boolean getboolAnsType(int i) {
-        return boolAnsType[i];
-    }
-
-    public int getQuestionID() {
-        return this.questionID;
+        return boolAnsType[i];  
     }
     
     public String getCorrectAnswer(){

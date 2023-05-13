@@ -37,7 +37,7 @@ public class QuizCreator {
 	public static void printQuestion() {					// Function that print list of Questions and answers
 
 		for (int i = 0; question[i] != null; i++) {				// A loop that runs on the question array
-			System.out.println("  [" + (i + 1) + "] " + question[i].getQuestion() + ":");
+			System.out.println("  [" + (i + 1) + "] " + question[i].getQuestion() + ":" +" (" + question[i].getDifficultyLevel() +" question)");
             int j = 0;
 
             while(j<question[i].getAnsCount()){					// A loop that runs on the answers and prints only indexes
@@ -58,7 +58,7 @@ public class QuizCreator {
 
 	public static void printSpecificQuestion(int qNum) {	// A loop that prints specific question (works the same as the previous one)
 		System.out.println("  [" + (qNum + 1) + "] " + question[qNum].getQuestion() + ":");
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < 10&&question[qNum].getCorrectAnsCount()!=101; j++) {
 			if (question[qNum].getFitAns(j) != 0) {
 				System.out.print(j + 1 + ") " + answers[question[qNum].getFitAns(j)] + ".");
 				if (question[qNum].getboolAnsType(j))
@@ -108,11 +108,40 @@ public class QuizCreator {
 	}
 
 	public static void addQuestionToTray() {							// Adding new question to tray
+		System.out.println("Do you want to add:\n \n [1] Open Question. \n [2] Multiple choice question");
 		System.out.println("Type question text you want to add: ");
+		if(getInt()==1)
+			aNum = 1;
+		else 
+			aNum = 2;
+			
+		
 		String userQ = s.nextLine();	
 		userQ = s.nextLine(); //sometimes scanner skip line (don't know why but the solution is to clone line)
 
-		question[questionCounter] = new Question(userQ);
+        String difficultyInput = "";
+		Boolean validInput = false;
+		while (!validInput) {
+            System.out.println("Enter the difficulty level (EASY, MEDIUM, HARD):");
+            difficultyInput = s.nextLine();
+
+            if (difficultyInput.equalsIgnoreCase("EASY")) 
+                validInput = true;
+			else if (difficultyInput.equalsIgnoreCase("MEDIUM")) 
+                validInput = true;
+        	else if (difficultyInput.equalsIgnoreCase("HARD")) 
+                validInput = true;
+            else {
+                System.out.println("Invalid difficulty level. Please try again.");
+            }
+        }
+		BaseQ.DifficultyLevel difficultyLevel = BaseQ.DifficultyLevel.valueOf(difficultyInput.toUpperCase());
+		if(aNum==1){
+			System.out.println("Type answer for your question:");
+			String ans = s.nextLine();
+		question[questionCounter] = new Question(userQ ,ans, difficultyLevel);
+		}else
+		question[questionCounter] = new Question(userQ ,difficultyLevel);
 		questionCounter++;
 		System.out.println("Your question is: \n");
 
@@ -242,7 +271,12 @@ public class QuizCreator {
 
 		for (int i = 0; i < qNum; i++) {						// User start to fill quiz array with questions from the list 
 			System.out.println("Choose question number " + (i + 1) + ": ");
-			quizQuestion[i] = getInt()-1;
+			aNum = getInt()-1;
+			while(aNum-1>=questionCounter){
+			System.out.println("There is only "+questionCounter +" questions (pick one that exists.)");
+			aNum = getInt()-1;
+			}
+			quizQuestion[i] = aNum;
 		}
 
 		printQuiz(qNum, quizQuestion);
@@ -253,7 +287,7 @@ public class QuizCreator {
 			System.out.println("|[1] - Add new answers to exists question.   |");
 			System.out.println("|[2] - Edit answer.                          |");
 			System.out.println("|[3] - Delete answer from question.          |");
-			System.out.println("|[4] - Save and create Quiz file.");
+			System.out.println("|[4] - Save and create Quiz file.            |");
 
 			switch (getInt()) {
 				case 1 -> QuizCreator.addAnsToQuestion();
@@ -297,20 +331,24 @@ public class QuizCreator {
 				pw.println("\n"+" [" + (i + 1) + "] " + question[tempNum].getQuestion() + ":");
 	
 				int j = 0;
-				while(j<question[tempNum].getAnsCount()){
+				while(j<question[tempNum].getAnsCount()&&question[tempNum].getCorrectAnsCount()!=101){
 					if (question[tempNum].getFitAns(j) != 0){
 						pw.print("\n"+(j + 1) + ") " + answers[question[tempNum].getFitAns(j)] + ".");
-							if (question[tempNum].getboolAnsType(j)&&question[tempNum].getCorrectAnsCount()==1&&k==0)
+							if (question[tempNum].getboolAnsType(j)&&question[tempNum].getAnsCount()==1&&k==0)
 							pw.print(" (Correct answers)");
 								pw.print("");
 					}
 					j++;
+				}if(question[tempNum].getCorrectAnsCount()==101){
+					pw.print("Type your answer here: ____________________________________");
+					if(k==0)
+					pw.print("\n Correct answer is: "+question[tempNum].getCorrectAnswer());
 				}
-				if(question[tempNum].getCorrectAnsCount()==0){
+				else if(question[tempNum].getAnsCount()==0){
 				pw.print("\n"+(question[tempNum].getAnsCount()+1) + ") There is no correct answers.");
 					if(k==0)
 						pw.print("(Correct answers)");
-				} else if (question[tempNum].getCorrectAnsCount()>1){
+				} else if (question[tempNum].getAnsCount()>1){
 					pw.print("\n"+(question[tempNum].getAnsCount()+1) + ") There is more than one correct answer.");
 					if(k==0)
 						pw.print("(Correct answers)");
@@ -330,16 +368,19 @@ public class QuizCreator {
 			System.out.println("[" + (i + 1) + "] " + question[tempNum].getQuestion() + ":");
 
             int j = 0;
-			while(j<question[tempNum].getAnsCount()){
+			while(j<question[tempNum].getAnsCount()&&question[tempNum].getCorrectAnsCount()!=101){
 				if (question[tempNum].getFitAns(j) != 0){
 							System.out.print(j + 1 + ") " + answers[question[tempNum].getFitAns(j)] + ".");
-						if (question[tempNum].getboolAnsType(j)&&question[tempNum].getCorrectAnsCount()==1)
+						if (question[tempNum].getboolAnsType(j)&&question[tempNum].getAnsCount()==1)
 							System.out.print("\u001B[32m(Correct answers) \u001B[0m");
 				System.out.println("");
 				}
                 j++;
             }
-			switch(question[tempNum].getCorrectAnsCount()) {
+			if(question[tempNum].getCorrectAnsCount()==101)
+				System.out.println("____________________________________");
+
+			else switch(question[tempNum].getAnsCount()) {
 				case 0:
 				System.out.println((question[tempNum].getAnsCount()+1) + ") There is no correct answers."+"\u001B[32m(Correct answers) \u001B[0m");
 				  break;

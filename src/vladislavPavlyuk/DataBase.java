@@ -1,5 +1,5 @@
 package vladislavPavlyuk;
-
+import vladislavPavlyuk.BaseQ.DifficultyLevel;
 import java.util.Scanner;
 
 public class DataBase {
@@ -8,20 +8,20 @@ public class DataBase {
 	public static int aNum; //Welcome to hell						// Answer number user choose
 	public static int qNum; 								// Question number user choose
 
-
 	public static int questionCounter = 10;					// Number of question in tray 
 	public static int answersCounter = 22;					// Number of answers in tray
+	
 
-	public static void questionBox() {						// Question tray
+	public static  void questionBox() {						// Question tray
 		// Question 1
-		QuizCreator.question[0] = new Question("What is the optimal temperature for teaching?");
+		QuizCreator.question[0] = new Question("What is the optimal temperature for teaching?",DifficultyLevel.NORMAL );
 			//Answers of the 1 question (Link to answers array and is answers true or false)
         QuizCreator.question[0].setAnswer(1, true);
 		QuizCreator.question[0].setAnswer(2, true);
 		QuizCreator.question[0].setAnswer(3, false);
 
 		// Question 2
-		QuizCreator.question[1] = new Question("What is the best language?");
+		QuizCreator.question[1] = new Question("What is the best language?",DifficultyLevel.EASY);
 			//Answers of the 2 question (Link to answers array and is answers true or false)
         QuizCreator.question[1].setAnswer(4, true);
         QuizCreator.question[1].setAnswer(5, false);
@@ -29,7 +29,7 @@ public class DataBase {
         QuizCreator.question[1].setAnswer(7, false);
 
 		// Question 3
-		QuizCreator.question[2] = new Question("Best name?");
+		QuizCreator.question[2] = new Question("Best name?",DifficultyLevel.NORMAL);
 			//Answers of the 3 question (Link to answers array and is answers true or false)
         QuizCreator.question[2].setAnswer(18, false);
         QuizCreator.question[2].setAnswer(21, false);
@@ -37,7 +37,7 @@ public class DataBase {
         QuizCreator.question[2].setAnswer(20, true);
 
 		// Question 4
-		QuizCreator.question[3] = new Question("1+1?");
+		QuizCreator.question[3] = new Question("1+1?",DifficultyLevel.EASY);
 			//Answers of the 4 question (Link to answers array and is answers true or false)
         QuizCreator.question[3].setAnswer(8, true);
         QuizCreator.question[3].setAnswer(9, false);
@@ -50,7 +50,7 @@ public class DataBase {
 		QuizCreator.question[3].setAnswer(16, true);
 
 		// Question 5
-		QuizCreator.question[4] = new Question("2+1?");
+		QuizCreator.question[4] = new Question("2+1?",DifficultyLevel.HARD);
 			//Answers of the 5 question (Link to answers array and is answers true or false)
         QuizCreator.question[4].setAnswer(10, true);
 		QuizCreator.question[4].setAnswer(11, false);
@@ -59,7 +59,7 @@ public class DataBase {
 		
 
 		// Question 6
-		QuizCreator.question[5] = new Question("2+2?");
+		QuizCreator.question[5] = new Question("2+2?",DifficultyLevel.NORMAL);
 			//Answers of the 6 question (Link to answers array and is answers true or false)
         QuizCreator.question[5].setAnswer(11, true);
 		QuizCreator.question[5].setAnswer(12, false);
@@ -69,7 +69,7 @@ public class DataBase {
 		QuizCreator.question[5].setAnswer(17, false);
 		
 		// Question 7
-		QuizCreator.question[6] = new Question("2/2?");
+		QuizCreator.question[6] = new Question("2/2?",DifficultyLevel.HARD);
 			//Answers of the 7 question (Link to answers array and is answers true or false)
         QuizCreator.question[6].setAnswer(11, false);
         QuizCreator.question[6].setAnswer(12, false);
@@ -78,7 +78,7 @@ public class DataBase {
 		QuizCreator.question[6].setAnswer(11, true);
 
 		// Question 8
-		QuizCreator.question[7] = new Question("2/1?");
+		QuizCreator.question[7] = new Question("2/1?",DifficultyLevel.NORMAL);
 			//Answers of the 8 question (Link to answers array and is answers true or false)
         QuizCreator.question[7].setAnswer(10, false);
 		QuizCreator.question[7].setAnswer(12, false);
@@ -87,7 +87,7 @@ public class DataBase {
 		QuizCreator.question[7].setAnswer(8, true);
 
 		// Question 9
-		QuizCreator.question[8] = new Question("2^2?");
+		QuizCreator.question[8] = new Question("2^2?",DifficultyLevel.EASY);
 			//Answers of the 9 question (Link to answers array and is answers true or false)
         QuizCreator.question[8].setAnswer(12, true);
 		QuizCreator.question[8].setAnswer(13, false);
@@ -97,7 +97,7 @@ public class DataBase {
 		QuizCreator.question[8].setAnswer(17, false);
 		
 		// Question 10
-		QuizCreator.question[9] = new Question("2*2?");
+		QuizCreator.question[9] = new Question("2*2?",DifficultyLevel.HARD);
 			//Answers of the 10 question (Link to answers array and is answers true or false)
         QuizCreator.question[9].setAnswer(16, false);
 		QuizCreator.question[9].setAnswer(17, false);
@@ -106,13 +106,13 @@ public class DataBase {
 		QuizCreator.question[9].setAnswer(11, true);
 
 		// Question 11 (Open question)
-		QuizCreator.question[10] = new Question("What is the color of the sun?", "White");
+		QuizCreator.question[10] = new Question("What is the color of the sun?", "White",DifficultyLevel.NORMAL);
 
 		// Question 12 (Open question)
-		QuizCreator.question[11] = new Question("Is it possible to work and study?", "Everything is possible if you believe in yourself");
+		QuizCreator.question[11] = new Question("Is it possible to work and study?", "Everything is possible if you believe in yourself",DifficultyLevel.EASY);
 
 		// Question 13 (Open question)
-		QuizCreator.question[12] = new Question("Who let the dogs out?","Who, who, who, who, who?");
+		QuizCreator.question[12] = new Question("Who let the dogs out?","Who, who, who, who, who?",DifficultyLevel.HARD);
 
 	}
 
